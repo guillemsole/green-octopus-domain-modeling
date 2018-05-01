@@ -1,6 +1,8 @@
 import {expect} from 'chai';
 import {GameShow} from '../../src/model/GameShow';
+import {Player} from '../../src/model/Player';
 import {User, UserId} from '../../src/model/User';
+import {Viewer} from '../../src/model/Viewer';
 
 describe('User', () => {
     let user: User;
@@ -29,10 +31,40 @@ describe('User', () => {
         expect(newUser.equal(other)).to.be.equal(false);
     });
 
-    it('should join a GameShow', () => {
-        const gameShow = GameShow.schedule(new Date(), 5000);
-        const player = user.join(gameShow);
-        expect(player.isPlayingIn(gameShow)).to.be.equal(true);
-        expect(player.userId).to.be.equal(user.id);
+    describe('Join game shows in different status', () => {
+        it('should throw error when trying to join an scheduled game show', () => {
+            const gameShow = GameShow.schedule(new Date(), 5000);
+            expect(() => {
+                user.join(gameShow);
+            }).to.throw(Error);
+        });
+
+        it('should throw error when trying to join a ready game show', () => {
+            const gameShow = GameShow.schedule(new Date(), 5000);
+            gameShow.assignQuestions([]);
+            expect(() => {
+                user.join(gameShow);
+            }).to.throw(Error);
+        });
+
+        it('should join a started GameShow and get a player', () => {
+            const gameShow = GameShow.schedule(new Date(), 5000);
+            gameShow.assignQuestions([]);
+            gameShow.open();
+            const player = user.join(gameShow);
+            expect(player).to.be.instanceof(Player);
+            expect(player.isPlayingIn(gameShow)).to.be.equal(true);
+            expect(player.userId).to.be.equal(user.id);
+        });
+
+        it('should join a running GameShow and get a viewer', () => {
+            const gameShow = GameShow.schedule(new Date(), 5000);
+            gameShow.assignQuestions([]);
+            gameShow.start();
+            const viewer = user.join(gameShow);
+            expect(viewer).to.be.instanceof(Viewer);
+        });
+
+        // TODO handle rest of game show states that should throw error.
     });
 });

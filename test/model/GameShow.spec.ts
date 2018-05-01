@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {GameShow, GameShowState} from '../../src/model/GameShow';
-import {Question} from '../../src/model/Question';
+import {fakeQuestion} from './FakeQuestion';
 
 describe('GameShow', () => {
 
@@ -14,7 +14,7 @@ describe('GameShow', () => {
 
     it('should add the required questions', () => {
         const gameShow = GameShow.schedule(new Date(), 5000);
-        const questions = [new Question('Sports')];
+        const questions = [fakeQuestion()];
 
         gameShow.assignQuestions(questions);
 
@@ -24,9 +24,9 @@ describe('GameShow', () => {
 
     it('should allow change a question', () => {
         const gameShow = GameShow.schedule(new Date(), 5000);
-        const firstQuestion = new Question('Geography');
-        const secondQuestion = new Question('History');
-        const questionToReplace = new Question('Sports');
+        const firstQuestion = fakeQuestion();
+        const secondQuestion = fakeQuestion();
+        const questionToReplace = fakeQuestion();
         const questions = [firstQuestion, secondQuestion];
 
         gameShow.assignQuestions(questions);
@@ -41,9 +41,9 @@ describe('GameShow', () => {
 
     it('should provide the next question', () => {
         const gameShow = GameShow.schedule(new Date(), 5000);
-        const firstQuestion = new Question('Geography');
-        const secondQuestion = new Question('History');
-        const thirdQuestion = new Question('Sports');
+        const firstQuestion = fakeQuestion();
+        const secondQuestion = fakeQuestion();
+        const thirdQuestion = fakeQuestion();
         const questions = [firstQuestion, secondQuestion, thirdQuestion];
 
         gameShow.assignQuestions(questions);

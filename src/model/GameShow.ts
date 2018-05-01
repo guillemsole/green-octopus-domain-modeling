@@ -1,14 +1,14 @@
 import {IndividualGame, IndividualGameId} from './IndividualGame';
 import {Question} from './Question';
 import {User} from './User';
+import {ViewerGame} from './ViewerGame';
 
 export enum GameShowState {
     SCHEDULED,
     READY,
-    STARTED,
+    OPENED,
     RUNNING,
     PAUSED,
-    RESUMED,
     CANCELED,
     FINISHED,
 }
@@ -54,12 +54,21 @@ export class GameShow {
         return this._questions[this.questionPosition++];
     }
 
+    open() {
+        this._state = GameShowState.OPENED;
+    }
+
     start() {
         this._state = GameShowState.RUNNING;
     }
 
-    public join(user: User): IndividualGame {
-        // TODO Handle GameShowState.RUNNING
-        return new IndividualGame(new IndividualGameId(user.id, this.id));
+    public join(user: User): IndividualGame | ViewerGame {
+        if (this.state === GameShowState.OPENED) {
+            return new IndividualGame(new IndividualGameId(user.id, this.id));
+        } else if (this.state === GameShowState.RUNNING) {
+            return new ViewerGame();
+        } else {
+            throw new Error('Cannot join a game if it has not started');
+        }
     }
 }
