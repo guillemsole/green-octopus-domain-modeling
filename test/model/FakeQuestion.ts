@@ -3,13 +3,13 @@ import {Question, QuestionType} from '../../src/model/Question';
 
 export const fakeQuestion = () => {
     const answers = [fakeAnswer(true), fakeAnswer(false), fakeAnswer(false)];
-    return new Question(
+    return Question.create(
         randomText(),
         answers,
         'Geography',
     );
 };
 
-const fakeAnswer = (isCorrect: boolean) => new Answer(randomText(isCorrect));
+const fakeAnswer = (isCorrect: boolean) => new Answer(randomText(), isCorrect);
 
 const randomText = () => Math.random().toString(36).substring(7);

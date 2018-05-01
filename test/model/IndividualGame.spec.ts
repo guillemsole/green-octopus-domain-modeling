@@ -10,7 +10,7 @@ describe('IndividualGame', () => {
         individualGame = new IndividualGame(new IndividualGameId(new UserId('+34', '600000000'), 0));
     });
 
-    it('should ', () => {
+    it('should save a new answer', () => {
 
     });
 });

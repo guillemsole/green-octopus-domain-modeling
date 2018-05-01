@@ -18,6 +18,7 @@ export class IndividualGame {
     }
 
     answer(question: Question, answer: Answer) {
+        // TODO: check question is current question running
         this.emptyExam.set(question, answer);
     }
 }
