@@ -20,19 +20,24 @@ export class GameShow {
     private questionPosition = 0;
 
     constructor(public readonly id: GameShowId,
-                public readonly scheduledDate: Date,
                 public readonly prize: number,
+                private _scheduledDate: Date,
                 private _state: GameShowState) {
 
     }
 
     static schedule(scheduledDate: Date, prize: number): GameShow {
-        return new GameShow(Math.random() % 1000, scheduledDate, prize, GameShowState.SCHEDULED);
+        return new GameShow(Math.random() % 1000, prize, scheduledDate, GameShowState.SCHEDULED);
     }
 
     assignQuestions(questions: Question[]): void {
         this._questions = questions;
         this._state = GameShowState.READY;
+    }
+
+    reschedule(scheduledDate: Date): void {
+        // TODO should throw in some status.
+        this._scheduledDate = scheduledDate;
     }
 
     get questions(): Question[] {
@@ -43,22 +48,26 @@ export class GameShow {
         return this._state;
     }
 
-    replaceQuestion(position: number, questionToReplace: Question) {
+    get scheduledDate(): Date {
+        return this._scheduledDate;
+    }
+
+    replaceQuestion(position: number, questionToReplace: Question): void {
         this._questions[position - 1] = questionToReplace;
     }
 
-    nextQuestion() {
+    nextQuestion(): void {
         if (this.state !== GameShowState.RUNNING) {
             throw new Error('GameShow has not started yet');
         }
         return this._questions[this.questionPosition++];
     }
 
-    open() {
+    open(): void {
         this._state = GameShowState.OPENED;
     }
 
-    start() {
+    start(): void {
         this._state = GameShowState.RUNNING;
     }
 

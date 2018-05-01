@@ -22,6 +22,16 @@ describe('GameShow', () => {
         expect(gameShow.state).to.be.equal(GameShowState.READY);
     });
 
+    it('should rechedule game show', () => {
+        const gameShow = GameShow.schedule(new Date(), 5000);
+        const questions = [fakeQuestion()];
+
+        const rescheduleDate = new Date();
+        gameShow.reschedule(rescheduleDate);
+
+        expect(gameShow.scheduledDate).to.be.equal(rescheduleDate);
+    });
+
     it('should allow change a question', () => {
         const gameShow = GameShow.schedule(new Date(), 5000);
         const firstQuestion = fakeQuestion();
@@ -37,6 +47,25 @@ describe('GameShow', () => {
 
         expect(gameShow.questions).to.be.deep.equal([firstQuestion, questionToReplace]);
         expect(gameShow.questions).to.be.not.equal(questionToReplace);
+    });
+
+    it('should open game', () => {
+        const gameShow = GameShow.schedule(new Date(), 5000);
+
+        gameShow.assignQuestions([fakeQuestion()]);
+        gameShow.open();
+
+        expect(gameShow.state).to.be.equal(GameShowState.OPENED);
+    });
+
+    it('should start game', () => {
+        const gameShow = GameShow.schedule(new Date(), 5000);
+
+        gameShow.assignQuestions([fakeQuestion()]);
+        gameShow.open();
+        gameShow.start();
+
+        expect(gameShow.state).to.be.equal(GameShowState.RUNNING);
     });
 
     it('should provide the next question', () => {
