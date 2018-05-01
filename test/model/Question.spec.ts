@@ -10,7 +10,6 @@ describe('Question', () => {
 
         expect(question.statement).to.be.equal('Statement');
         expect(question.answers).to.be.deep.equal(answers);
-        expect(question.state).to.be.equal(QuestionState.CREATED);
     });
 
     it('should throw when there are no answers', () => {
