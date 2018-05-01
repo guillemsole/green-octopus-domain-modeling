@@ -1,7 +1,5 @@
 import {GameShow} from './GameShow';
-import {IndividualGame} from './IndividualGame';
 import {Player} from './Player';
-import {Viewer} from './Viewer';
 
 export class UserId {
     constructor(public readonly countryCode: string,
@@ -18,13 +16,9 @@ export class User {
     constructor(public readonly id: UserId) {
     }
 
-    public join(gameShow: GameShow): Player | Viewer {
+    public join(gameShow: GameShow): Player {
         const game = gameShow.join(this);
-        if (game instanceof IndividualGame) {
-            return new Player(this.id, game);
-        } else {
-            return new Viewer(gameShow.id);
-        }
+        return new Player(this.id, game);
     }
 
     equal(other: User): boolean {

@@ -56,7 +56,7 @@ export class GameShow {
         this._questions[position - 1] = questionToReplace;
     }
 
-    nextQuestion(): void {
+    nextQuestion(): Question {
         if (this.state !== GameShowState.RUNNING) {
             throw new Error('GameShow has not started yet');
         }
@@ -72,11 +72,11 @@ export class GameShow {
         this._state = GameShowState.RUNNING;
     }
 
-    public join(user: User): IndividualGame | ViewerGame {
+    public join(user: User): IndividualGame {
         if (this.state === GameShowState.OPENED) {
             return new IndividualGame(new IndividualGameId(user.id, this.id));
         } else if (this.state === GameShowState.RUNNING) {
-            return new ViewerGame();
+            throw new Error('Cannot join a game if it is running');
         } else {
             throw new Error('Cannot join a game if it has not started');
         }
