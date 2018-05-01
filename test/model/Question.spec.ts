@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {Answer} from '../../src/model/Answer';
-import {Question, QuestionState, QuestionType} from '../../src/model/Question';
+import {Question, QuestionState} from '../../src/model/Question';
 
 describe('Question', () => {
 

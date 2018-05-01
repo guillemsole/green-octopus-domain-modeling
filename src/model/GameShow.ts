@@ -1,7 +1,6 @@
 import {IndividualGame, IndividualGameId} from './IndividualGame';
 import {Question} from './Question';
 import {User} from './User';
-import {ViewerGame} from './ViewerGame';
 
 export enum GameShowState {
     SCHEDULED,

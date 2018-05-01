@@ -2,7 +2,6 @@ import {expect} from 'chai';
 import {GameShow} from '../../src/model/GameShow';
 import {Player} from '../../src/model/Player';
 import {User, UserId} from '../../src/model/User';
-import {Viewer} from '../../src/model/Viewer';
 
 describe('User', () => {
     let user: User;
@@ -55,14 +54,6 @@ describe('User', () => {
             expect(player).to.be.instanceof(Player);
             expect(player.isPlayingIn(gameShow)).to.be.equal(true);
             expect(player.userId).to.be.equal(user.id);
-        });
-
-        it('should join a running GameShow and get a viewer', () => {
-            const gameShow = GameShow.schedule(new Date(), 5000);
-            gameShow.assignQuestions([]);
-            gameShow.start();
-            const viewer = user.join(gameShow);
-            expect(viewer).to.be.instanceof(Viewer);
         });
 
         // TODO handle rest of game show states that should throw error.

@@ -1,5 +1,5 @@
 import {Answer} from '../../src/model/Answer';
-import {Question, QuestionType} from '../../src/model/Question';
+import {Question} from '../../src/model/Question';
 
 export const fakeQuestion = () => {
     const answers = [fakeAnswer(true), fakeAnswer(false), fakeAnswer(false)];
