@@ -1,8 +1,6 @@
 import {expect} from 'chai';
-import {Answer} from '../../src/model/Answer';
 import {IndividualGame, IndividualGameId} from '../../src/model/IndividualGame';
 import {Player} from '../../src/model/Player';
-import {Question} from '../../src/model/Question';
 import {UserId} from '../../src/model/User';
 
 describe('Player', () => {
@@ -24,7 +22,6 @@ describe('Player', () => {
         const userId = new UserId('+34', '600000000');
         const player = new Player(userId,
             new IndividualGame(new IndividualGameId(userId, 2)));
-        const answers = [new Answer('A', true), new Answer('B', false)];
-        player.answer(Question.create('Sports', answers, 'Geography'), answers[0]);
+        player.answer(12, 0);
     });
 });

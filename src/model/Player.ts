@@ -1,7 +1,6 @@
-import {Answer} from './Answer';
 import {GameShow} from './GameShow';
 import {IndividualGame} from './IndividualGame';
-import {Question} from './Question';
+import {QuestionId} from './Question';
 import {UserId} from './User';
 
 export class Player {
@@ -16,7 +15,7 @@ export class Player {
         return this.playingIn.individualGameId.gameShowId === gameShow.id;
     }
 
-    answer(question: Question, answer: Answer) {
-        this.playingIn.answer(question, answer);
+    answer(questionId: QuestionId, answerIndex: number) {
+        this.playingIn.answer(questionId, answerIndex);
     }
 }

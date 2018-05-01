@@ -1,6 +1,5 @@
-import {Answer} from './Answer';
 import {GameShowId} from './GameShow';
-import {Question} from './Question';
+import {QuestionId} from './Question';
 import {UserId} from './User';
 
 export class IndividualGameId {
@@ -11,14 +10,13 @@ export class IndividualGameId {
 }
 
 export class IndividualGame {
-    private readonly emptyExam: Map<Question, Answer> = new Map<Question, Answer>();
+    private readonly emptyExam: Map<QuestionId, number> = new Map<QuestionId, number>();
 
     constructor(public readonly individualGameId: IndividualGameId) {
 
     }
 
-    answer(question: Question, answer: Answer) {
-        // TODO: check question is current question running
-        this.emptyExam.set(question, answer);
+    answer(questionId: QuestionId, answerIndex: number) {
+        this.emptyExam.set(questionId, answerIndex);
     }
 }
