@@ -38,4 +38,18 @@ describe('GameShow', () => {
         expect(gameShow.questions).to.be.deep.equal([firstQuestion, questionToReplace]);
         expect(gameShow.questions).to.be.not.equal(questionToReplace);
     });
+
+    it('should provide the next question', () => {
+        const gameShow = GameShow.schedule(new Date(), 5000);
+        const firstQuestion = new Question('Geography');
+        const secondQuestion = new Question('History');
+        const thirdQuestion = new Question('Sports');
+        const questions = [firstQuestion, secondQuestion, thirdQuestion];
+
+        gameShow.assignQuestions(questions);
+        gameShow.start();
+
+        expect(gameShow.nextQuestion()).to.be.equal(firstQuestion);
+        expect(gameShow.nextQuestion()).to.be.equal(secondQuestion);
+    });
 });

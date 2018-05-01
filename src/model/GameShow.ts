@@ -11,6 +11,7 @@ export enum GameShowState {
 
 export class GameShow {
     private _questions: Question[];
+    private questionPosition = 0;
 
     constructor(public readonly scheduledDate: Date,
                 public readonly prize: number,
@@ -37,5 +38,16 @@ export class GameShow {
 
     replaceQuestion(position: number, questionToReplace: Question) {
         this._questions[position - 1] = questionToReplace;
+    }
+
+    nextQuestion() {
+        if (this.state !== GameShowState.RUNNING) {
+            throw new Error('GameShow has not started yet');
+        }
+        return this._questions[this.questionPosition++];
+    }
+
+    start() {
+        this._state = GameShowState.RUNNING;
     }
 }
