@@ -17,7 +17,9 @@ export class User {
     }
 
     public join(gameShow: GameShow): Player {
-        return new Player(this.id, gameShow);
+        // TODO: Return Viewer in case the GameShow is already RUNNING
+        const individualGame = gameShow.join(this);
+        return new Player(this.id, individualGame);
     }
 
     equal(other: User): boolean {

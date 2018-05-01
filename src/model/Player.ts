@@ -1,8 +1,20 @@
+import {Answer} from './Answer';
 import {GameShow} from './GameShow';
+import {IndividualGame} from './IndividualGame';
+import {Question} from './Question';
 import {UserId} from './User';
 
 export class Player {
     constructor(public readonly userId: UserId,
-                public readonly playingIn: GameShow) {
+                public readonly playingIn: IndividualGame) {
+        // TODO check IndividualGame id has the same user id as me
+    }
+
+    isPlayingIn(gameShow: GameShow) {
+        return this.playingIn.individualGameId.gameShowId === gameShow.id;
+    }
+
+    answer(question: Question, answer: Answer) {
+        this.playingIn.answer(question, answer);
     }
 }

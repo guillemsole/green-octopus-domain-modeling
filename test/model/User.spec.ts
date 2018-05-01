@@ -30,9 +30,9 @@ describe('User', () => {
     });
 
     it('should join a GameShow', () => {
-        const gameShow = new GameShow();
+        const gameShow = GameShow.schedule(new Date(), 5000);
         const player = user.join(gameShow);
-        expect(player.playingIn).to.be.equal(gameShow);
+        expect(player.isPlayingIn(gameShow)).to.be.equal(true);
         expect(player.userId).to.be.equal(user.id);
     });
 });

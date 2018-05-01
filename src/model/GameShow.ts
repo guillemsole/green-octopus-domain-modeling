@@ -1,26 +1,33 @@
+import {IndividualGame, IndividualGameId} from './IndividualGame';
 import {Question} from './Question';
+import {User} from './User';
 
 export enum GameShowState {
     SCHEDULED,
     READY,
+    STARTED,
     RUNNING,
-    FINISHED,
+    PAUSED,
     RESUMED,
     CANCELED,
+    FINISHED,
 }
+
+export type GameShowId = number;
 
 export class GameShow {
     private _questions: Question[];
     private questionPosition = 0;
 
-    constructor(public readonly scheduledDate: Date,
+    constructor(public readonly id: GameShowId,
+                public readonly scheduledDate: Date,
                 public readonly prize: number,
                 private _state: GameShowState) {
 
     }
 
     static schedule(scheduledDate: Date, prize: number): GameShow {
-        return new GameShow(scheduledDate, prize, GameShowState.SCHEDULED);
+        return new GameShow(Math.random() % 1000, scheduledDate, prize, GameShowState.SCHEDULED);
     }
 
     assignQuestions(questions: Question[]): void {
@@ -49,5 +56,10 @@ export class GameShow {
 
     start() {
         this._state = GameShowState.RUNNING;
+    }
+
+    public join(user: User): IndividualGame {
+        // TODO Handle GameShowState.RUNNING
+        return new IndividualGame(new IndividualGameId(user.id, this.id));
     }
 }
