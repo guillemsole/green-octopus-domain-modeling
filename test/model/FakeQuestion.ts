@@ -2,15 +2,14 @@ import {Answer} from '../../src/model/Answer';
 import {Question, QuestionType} from '../../src/model/Question';
 
 export const fakeQuestion = () => {
-    const answers = [fakeAnswer(), fakeAnswer(), fakeAnswer()];
+    const answers = [fakeAnswer(true), fakeAnswer(false), fakeAnswer(false)];
     return new Question(
         randomText(),
         answers,
-        answers[0].id,
-        QuestionType.GEOGRAPHY,
+        'Geography',
     );
 };
 
-const fakeAnswer = () => new Answer(randomText());
+const fakeAnswer = (isCorrect: boolean) => new Answer(randomText(isCorrect));
 
 const randomText = () => Math.random().toString(36).substring(7);

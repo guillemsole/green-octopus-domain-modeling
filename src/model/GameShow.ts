@@ -60,6 +60,7 @@ export class GameShow {
         if (this.state !== GameShowState.RUNNING) {
             throw new Error('GameShow has not started yet');
         }
+
         return this._questions[this.questionPosition++];
     }
 
