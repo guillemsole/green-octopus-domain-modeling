@@ -11,7 +11,7 @@ export class IndividualGameId {
 }
 
 export class IndividualGame {
-    private readonly emptyExam: Map<Question, Answer>;
+    private readonly emptyExam: Map<Question, Answer> = new Map();
 
     constructor(public readonly individualGameId: IndividualGameId) {
 
