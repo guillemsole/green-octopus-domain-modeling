@@ -1,0 +1,52 @@
+{
+  "name": "spike-domain-modeling",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "mocha --ui bdd --recursive ./build/test",
+    "build": "rm -rf build/ && tsc",
+    "test:cov": "nyc --reporter=lcov --reporter=text-lcov npm t && nyc report --reporter=text-lcov",
+    "test:coveralls": "npm run test:cov | coveralls"
+  },
+  "bin": {
+    "nem2-cli": "./bin/nem2-cli"
+  },
+  "contributors": [
+    {
+      "name": "Guillem Sole",
+      "email": "guillemsolecubilo@gmail.com"
+    },
+    {
+      "name": "Aleix Morgadas",
+      "email": "aleixmorgadas@gmail.com"
+    }
+  ],
+  "bugs": "https://github.com/nemtech/nem2-cli/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nemtech/nem2-cli.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^9.3.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.44",
+    "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
+    "mocha": "^4.0.1",
+    "nyc": "^11.3.0",
+    "ts-node": "^5.0.1",
+    "ts-mockito": "^2.2.8",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js"
+    ]
+  }
+}
