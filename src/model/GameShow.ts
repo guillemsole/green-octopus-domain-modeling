@@ -29,6 +29,7 @@ export class GameShow {
         return new GameShow(Math.random() % 1000, prize, scheduledDate, GameShowState.SCHEDULED);
     }
 
+    // TODO check order of questions (can we save it to DB?)
     assignQuestions(questions: Question[]): void {
         this._questions = questions;
         this._state = GameShowState.READY;
@@ -51,6 +52,7 @@ export class GameShow {
         return this._scheduledDate;
     }
 
+    //TODO Should replace all array by new array
     replaceQuestion(position: number, questionToReplace: Question): void {
         this._questions[position - 1] = questionToReplace;
     }
@@ -63,6 +65,7 @@ export class GameShow {
         return this._questions[this.questionPosition++];
     }
 
+    // TODO Push?
     open(): void {
         this._state = GameShowState.OPENED;
     }

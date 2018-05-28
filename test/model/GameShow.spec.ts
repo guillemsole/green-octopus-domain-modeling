@@ -6,6 +6,7 @@ describe('GameShow', () => {
 
     it('should be scheduled', () => {
         const scheduledDate = new Date();
+        // TODO Make Prize object and subclasses (MonetaryPrize, LivesPrize....)
         const gameShow = GameShow.schedule(scheduledDate, 5000);
         expect(gameShow.scheduledDate).to.be.equal(scheduledDate);
         expect(gameShow.prize).to.be.equal(5000);
@@ -42,7 +43,6 @@ describe('GameShow', () => {
         gameShow.assignQuestions(questions);
 
         expect(gameShow.questions).to.be.equal(questions);
-
         gameShow.replaceQuestion(2, questionToReplace);
 
         expect(gameShow.questions).to.be.deep.equal([firstQuestion, questionToReplace]);
