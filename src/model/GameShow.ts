@@ -24,11 +24,6 @@ export class GameShow extends Show {
         this._state = ShowState.READY;
     }
 
-    reschedule(scheduledDate: Date): void {
-        // TODO should throw in some status.
-        this._scheduledDate = scheduledDate;
-    }
-
     get questions(): Question[] {
         return this._questions;
     }
