@@ -3,7 +3,7 @@ import {Question} from '../../src/model/Question';
 
 export const fakeQuestion = () => {
     return Question.Builder()
-        .addStatement(new Map<string, string>().set('en', randomText()))
+        .addStatement(new Map([['en', randomText()]]))
         .addAnswer(fakeAnswer())
         .addCorrectAnswer(fakeAnswer())
         .addQuestionTags('history')
@@ -11,6 +11,6 @@ export const fakeQuestion = () => {
         .build();
 };
 
-const fakeAnswer = () => Answer.create(new Map<string, string>().set('en', randomText()));
+const fakeAnswer = () => Answer.create(new Map([['en', randomText()]]));
 
 const randomText = () => Math.random().toString(36).substring(7);

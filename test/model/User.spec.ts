@@ -3,6 +3,7 @@ import {GameShow} from '../../src/model/GameShow';
 import {Player} from '../../src/model/Player';
 import {User, UserId} from '../../src/model/User';
 import {Broadcast} from '../../src/model/Broadcast';
+import {MonetaryPrize} from '../../src/model/MonetaryPrize';
 
 describe('User', () => {
     let user: User;
@@ -33,14 +34,14 @@ describe('User', () => {
 
     describe('Join game shows in different status', () => {
         it('should throw error when trying to join an scheduled game show', () => {
-            const gameShow = GameShow.schedule(new Date(), 5000);
+            const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
             expect(() => {
                 user.join(gameShow);
             }).to.throw(Error);
         });
 
         it('should throw error when trying to join a ready game show', () => {
-            const gameShow = GameShow.schedule(new Date(), 5000);
+            const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
             gameShow.assignQuestions([]);
             expect(() => {
                 user.join(gameShow);
@@ -48,7 +49,7 @@ describe('User', () => {
         });
 
         it('should join a started GameShow and get a player', () => {
-            const gameShow = GameShow.schedule(new Date(), 5000);
+            const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
             gameShow.assignQuestions([]);
             gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
             const player = user.join(gameShow);

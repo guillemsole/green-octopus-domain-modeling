@@ -1,21 +1,21 @@
 import {expect} from 'chai';
+import {Broadcast} from '../../src/model/Broadcast';
 import {GameShow, GameShowState} from '../../src/model/GameShow';
 import {fakeQuestion} from './FakeQuestion';
-import {Broadcast} from '../../src/model/Broadcast';
+import {MonetaryPrize} from '../../src/model/MonetaryPrize';
 
 describe('GameShow', () => {
 
     it('should be scheduled', () => {
         const scheduledDate = new Date();
-        // TODO Make Prize object and subclasses (MonetaryPrize, LivesPrize....)
-        const gameShow = GameShow.schedule(scheduledDate, 5000);
+        const gameShow = GameShow.schedule(scheduledDate, new MonetaryPrize(1000, '€'));
         expect(gameShow.scheduledDate).to.be.equal(scheduledDate);
-        expect(gameShow.prize).to.be.equal(5000);
+        expect(gameShow.prize.text).to.be.equal('1000€');
         expect(gameShow.state).to.be.equal(GameShowState.SCHEDULED);
     });
 
     it('should add the required questions', () => {
-        const gameShow = GameShow.schedule(new Date(), 5000);
+        const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
         const questions = [fakeQuestion()];
 
         gameShow.assignQuestions(questions);
@@ -25,7 +25,7 @@ describe('GameShow', () => {
     });
 
     it('should rechedule game show', () => {
-        const gameShow = GameShow.schedule(new Date(), 5000);
+        const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
         const questions = [fakeQuestion()];
 
         const rescheduleDate = new Date();
@@ -35,7 +35,7 @@ describe('GameShow', () => {
     });
 
     it('should open game', () => {
-        const gameShow = GameShow.schedule(new Date(), 5000);
+        const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
 
         gameShow.assignQuestions([fakeQuestion()]);
         gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
@@ -44,7 +44,7 @@ describe('GameShow', () => {
     });
 
     it('should start game', () => {
-        const gameShow = GameShow.schedule(new Date(), 5000);
+        const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
 
         gameShow.assignQuestions([fakeQuestion()]);
         gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
@@ -54,7 +54,7 @@ describe('GameShow', () => {
     });
 
     it('should provide the next question', () => {
-        const gameShow = GameShow.schedule(new Date(), 5000);
+        const gameShow = GameShow.schedule(new Date(), new MonetaryPrize(1000, '€'));
         const firstQuestion = fakeQuestion();
         const secondQuestion = fakeQuestion();
         const thirdQuestion = fakeQuestion();
