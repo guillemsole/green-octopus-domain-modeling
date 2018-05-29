@@ -33,14 +33,16 @@ describe('User', () => {
 
     describe('Join game shows in different status', () => {
         it('should throw error when trying to join an scheduled game show', () => {
-            const gameShow = GameShow.schedule(new Date(), 5000);
+            const gameShow = new GameShow(5000);
+            gameShow.schedule(new Date());
             expect(() => {
                 user.join(gameShow);
             }).to.throw(Error);
         });
 
         it('should throw error when trying to join a ready game show', () => {
-            const gameShow = GameShow.schedule(new Date(), 5000);
+            const gameShow = new GameShow(5000);
+            gameShow.schedule(new Date());
             gameShow.assignQuestions([]);
             expect(() => {
                 user.join(gameShow);
@@ -48,7 +50,8 @@ describe('User', () => {
         });
 
         it('should join a started GameShow and get a player', () => {
-            const gameShow = GameShow.schedule(new Date(), 5000);
+            const gameShow = new GameShow(5000);
+            gameShow.schedule(new Date());
             gameShow.assignQuestions([]);
             gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
             const player = user.join(gameShow);

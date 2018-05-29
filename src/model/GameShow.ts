@@ -1,21 +1,9 @@
 import {Broadcast} from './Broadcast';
 import {IndividualGame, IndividualGameId} from './IndividualGame';
-import {Question} from './Question';
-import {User} from './User';
 import {Prize} from './Prize';
+import {Question} from './Question';
 import { Show, ShowState } from './Show';
-
-export enum GameShowState {
-    SCHEDULED,
-    READY,
-    OPENED,
-    RUNNING,
-    PAUSED,
-    CANCELED,
-    FINISHED,
-}
-
-export type GameShowId = number;
+import {User} from './User';
 
 export class GameShow extends Show {
     private _questions: Question[];
@@ -23,6 +11,7 @@ export class GameShow extends Show {
 
     constructor(public readonly prize: Prize) {
                 super();
+                this._state = ShowState.CREATED;
     }
 
     // static schedule(scheduledDate: Date, prize: Prize): GameShow {

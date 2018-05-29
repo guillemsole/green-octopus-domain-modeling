@@ -3,6 +3,7 @@ import { IndividualGame, IndividualGameId } from './IndividualGame';
 import { User } from './User';
 
 export enum ShowState {
+    CREATED,
     SCHEDULED,
     READY,
     OPENED,
@@ -21,20 +22,25 @@ export interface Schedulable {
     start: () => void;
 }
 
-export abstract class Show implements Schedulable {
+export class Show implements Schedulable {
     protected _scheduledDate: Date;
-    protected readonly _id: ShowId;
+    public readonly id: ShowId;
     protected _state: ShowState;
     protected _broadcast: Broadcast;
+
+    constructor() {
+        this.id = Math.random() % 1000;
+    }
 
     reschedule(scheduledDate: Date): void {
         // TODO should throw in some status.
         this._scheduledDate = scheduledDate;
     }
 
-    schedule(scheduledDate: Date): void {
+    public schedule(scheduledDate: Date): void {
         // TODO should throw in some status.
         this._scheduledDate = scheduledDate;
+        this._state = ShowState.SCHEDULED;
     }
 
     get scheduledDate(): Date {
@@ -65,7 +71,7 @@ export abstract class Show implements Schedulable {
     // TODO make general class for IndividualGame (IndividualStream?)
     public join(user: User): IndividualGame {
         if (this._state === ShowState.OPENED) {
-            return new IndividualGame(new IndividualGameId(user.id, this._id));
+            return new IndividualGame(new IndividualGameId(user.id, this.id));
         } else if (this._state === ShowState.RUNNING) {
             throw new Error('Cannot join a show if it is running');
         } else {

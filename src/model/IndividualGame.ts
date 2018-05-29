@@ -1,10 +1,10 @@
-import {GameShowId} from './GameShow';
 import {QuestionId} from './Question';
+import {ShowId} from './Show';
 import {UserId} from './User';
 
 export class IndividualGameId {
     constructor(public readonly userId: UserId,
-                public readonly gameShowId: GameShowId) {
+                public readonly gameShowId: ShowId) {
 
     }
 }
