@@ -1,7 +1,9 @@
+import { Choosable } from './Choosable';
 
 export type AnswerId = number;
 
-export class Answer {
+export class Answer implements Choosable {
+    choose: () => void;
     // TODO DB to many relationship
     constructor(public readonly id: AnswerId,
                 public readonly text: Map<string, string>) {

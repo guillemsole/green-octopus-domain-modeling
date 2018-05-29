@@ -1,15 +1,18 @@
 import {Answer} from './Answer';
+import { Interaction } from './Interaction';
 
 export type QuestionId = number;
 
-export class Question {
+export class Question extends Interaction {
     // DB we store answer id
     constructor(public readonly id: QuestionId,
                 public readonly statement: Map<string, string>,
                 public readonly answers: Answer[],
                 public readonly correctAnswer: Answer,
                 public readonly questionTags: string,
-                public readonly source?: string) {}
+                public readonly source?: string) {
+                    super();
+                }
 
     public static Builder() {
         return new QuestionBuilder();
