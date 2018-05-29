@@ -1,6 +1,7 @@
 import {expect} from 'chai';
 import {GameShow, GameShowState} from '../../src/model/GameShow';
 import {fakeQuestion} from './FakeQuestion';
+import {Broadcast} from '../../src/model/Broadcast';
 
 describe('GameShow', () => {
 
@@ -33,27 +34,11 @@ describe('GameShow', () => {
         expect(gameShow.scheduledDate).to.be.equal(rescheduleDate);
     });
 
-    it('should allow change a question', () => {
-        const gameShow = GameShow.schedule(new Date(), 5000);
-        const firstQuestion = fakeQuestion();
-        const secondQuestion = fakeQuestion();
-        const questionToReplace = fakeQuestion();
-        const questions = [firstQuestion, secondQuestion];
-
-        gameShow.assignQuestions(questions);
-
-        expect(gameShow.questions).to.be.equal(questions);
-        gameShow.replaceQuestion(2, questionToReplace);
-
-        expect(gameShow.questions).to.be.deep.equal([firstQuestion, questionToReplace]);
-        expect(gameShow.questions).to.be.not.equal(questionToReplace);
-    });
-
     it('should open game', () => {
         const gameShow = GameShow.schedule(new Date(), 5000);
 
         gameShow.assignQuestions([fakeQuestion()]);
-        gameShow.open();
+        gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
 
         expect(gameShow.state).to.be.equal(GameShowState.OPENED);
     });
@@ -62,7 +47,7 @@ describe('GameShow', () => {
         const gameShow = GameShow.schedule(new Date(), 5000);
 
         gameShow.assignQuestions([fakeQuestion()]);
-        gameShow.open();
+        gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
         gameShow.start();
 
         expect(gameShow.state).to.be.equal(GameShowState.RUNNING);
@@ -76,6 +61,7 @@ describe('GameShow', () => {
         const questions = [firstQuestion, secondQuestion, thirdQuestion];
 
         gameShow.assignQuestions(questions);
+        gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
         gameShow.start();
 
         expect(gameShow.nextQuestion()).to.be.equal(firstQuestion);

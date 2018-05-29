@@ -1,6 +1,8 @@
+import {Broadcast} from './Broadcast';
 import {IndividualGame, IndividualGameId} from './IndividualGame';
 import {Question} from './Question';
 import {User} from './User';
+import {Prize} from './Prize';
 
 export enum GameShowState {
     SCHEDULED,
@@ -17,15 +19,16 @@ export type GameShowId = number;
 export class GameShow {
     private _questions: Question[];
     private questionPosition = 0;
+    private _broadcast: Broadcast;
 
     constructor(public readonly id: GameShowId,
-                public readonly prize: number,
+                public readonly prize: Prize,
                 private _scheduledDate: Date,
                 private _state: GameShowState) {
 
     }
 
-    static schedule(scheduledDate: Date, prize: number): GameShow {
+    static schedule(scheduledDate: Date, prize: Prize): GameShow {
         return new GameShow(Math.random() % 1000, prize, scheduledDate, GameShowState.SCHEDULED);
     }
 
@@ -52,13 +55,15 @@ export class GameShow {
         return this._scheduledDate;
     }
 
-    //TODO Should replace all array by new array
-    replaceQuestion(position: number, questionToReplace: Question): void {
-        this._questions[position - 1] = questionToReplace;
+    get broadcast(): Broadcast {
+        if (this._state !== GameShowState.OPENED && this._state !== GameShowState.RUNNING) {
+            throw new Error('Game show is not available');
+        }
+        return this.broadcast;
     }
 
     nextQuestion(): Question {
-        if (this.state !== GameShowState.RUNNING) {
+        if (this._state !== GameShowState.RUNNING) {
             throw new Error('GameShow has not started yet');
         }
         // TODO: test last question has status answered
@@ -66,7 +71,8 @@ export class GameShow {
     }
 
     // TODO Push?
-    open(): void {
+    open(broadcast: Broadcast): void {
+        this._broadcast = broadcast;
         this._state = GameShowState.OPENED;
     }
 
@@ -75,9 +81,9 @@ export class GameShow {
     }
 
     public join(user: User): IndividualGame {
-        if (this.state === GameShowState.OPENED) {
+        if (this._state === GameShowState.OPENED) {
             return new IndividualGame(new IndividualGameId(user.id, this.id));
-        } else if (this.state === GameShowState.RUNNING) {
+        } else if (this._state === GameShowState.RUNNING) {
             throw new Error('Cannot join a game if it is running');
         } else {
             throw new Error('Cannot join a game if it has not started');

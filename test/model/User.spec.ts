@@ -2,6 +2,7 @@ import {expect} from 'chai';
 import {GameShow} from '../../src/model/GameShow';
 import {Player} from '../../src/model/Player';
 import {User, UserId} from '../../src/model/User';
+import {Broadcast} from '../../src/model/Broadcast';
 
 describe('User', () => {
     let user: User;
@@ -49,7 +50,7 @@ describe('User', () => {
         it('should join a started GameShow and get a player', () => {
             const gameShow = GameShow.schedule(new Date(), 5000);
             gameShow.assignQuestions([]);
-            gameShow.open();
+            gameShow.open(new Broadcast('rtmp://greenoctopus.tech/live', 'wss://greenoctopus.tech/ws'));
             const player = user.join(gameShow);
             expect(player).to.be.instanceof(Player);
             expect(player.isPlayingIn(gameShow)).to.be.equal(true);

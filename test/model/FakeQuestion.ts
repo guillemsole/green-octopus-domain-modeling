@@ -2,14 +2,15 @@ import {Answer} from '../../src/model/Answer';
 import {Question} from '../../src/model/Question';
 
 export const fakeQuestion = () => {
-    const answers = [fakeAnswer(true), fakeAnswer(false), fakeAnswer(false)];
-    return Question.create(
-        randomText(),
-        answers,
-        'Geography',
-    );
+    return Question.Builder()
+        .addStatement(new Map<string, string>().set('en', randomText()))
+        .addAnswer(fakeAnswer())
+        .addCorrectAnswer(fakeAnswer())
+        .addQuestionTags('history')
+        .addSource('https://greenoctopus.tech')
+        .build();
 };
 
-const fakeAnswer = (isCorrect: boolean) => new Answer(randomText(), isCorrect);
+const fakeAnswer = () => Answer.create(new Map<string, string>().set('en', randomText()));
 
 const randomText = () => Math.random().toString(36).substring(7);

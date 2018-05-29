@@ -4,8 +4,7 @@ import {Answer} from '../../src/model/Answer';
 describe('Answer', () => {
     it('should create a new answer', () => {
         const text = 'This is an answer';
-        const answer = new Answer(text, true);
-        expect(answer.text).to.be.equals(text);
-        expect(answer.isCorrect).to.be.equal(true);
+        const answer = Answer.create(new Map<string, string>().set('en', text));
+        expect(answer.text.get('en')).to.be.equals(text);
     });
 });
