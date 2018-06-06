@@ -5,7 +5,7 @@ export type QuestionId = number;
 export class Question {
     // DB we store answer id
     constructor(public readonly id: QuestionId,
-                public readonly statement: Map<string, string>,
+                public readonly statement: string,
                 public readonly answers: Answer[],
                 public readonly correctAnswer: Answer,
                 public readonly questionTags: string,
@@ -18,7 +18,7 @@ export class Question {
 
 class QuestionBuilder {
     private readonly id: QuestionId;
-    private statement: Map<string, string>;
+    private statement: string;
     private answers: Answer[] = [];
     private correctAnswer: Answer;
     private questionTags: string;
@@ -28,7 +28,7 @@ class QuestionBuilder {
         this.id = Math.random() % 1000;
     }
 
-    public addStatement(statement: Map<string, string>): QuestionBuilder {
+    public addStatement(statement: string): QuestionBuilder {
         this.statement = statement;
         return this;
     }

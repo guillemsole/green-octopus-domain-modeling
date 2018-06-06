@@ -2,12 +2,11 @@
 export type AnswerId = number;
 
 export class Answer {
-    // TODO DB to many relationship
     constructor(public readonly id: AnswerId,
-                public readonly text: Map<string, string>) {
+                public readonly text: string) {
     }
 
-    public static create(text: Map<string, string>): Answer {
+    public static create(text: string): Answer {
         return new Answer(Math.random() % 1000, text);
     }
 }
